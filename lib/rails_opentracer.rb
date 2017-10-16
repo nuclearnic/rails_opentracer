@@ -1,4 +1,5 @@
-require "rails_opentracer/version"
+require 'rails_opentracer/version'
+require 'faraday'
 
 module RailsOpentracer
   def faraday_get(url)
