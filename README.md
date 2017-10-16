@@ -35,6 +35,8 @@ To run Zipkin locally, do:
 
   $ docker run -d -p 9411:9411 openzipkin/zipkin
 
+You will need to set an environment variable with the Zipkin client URL. Locally this would be: `ENV['ZIPKIN_SERVICE_URL']='http://localhost:9411'`.
+
 Whenever a request is made to another application, do:
 
 ```ruby
