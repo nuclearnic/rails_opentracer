@@ -2,7 +2,7 @@ require 'rails_opentracer/version'
 require 'faraday'
 
 module RailsOpentracer
-  def faraday_get(url)
+  def get(url)
     connection = Faraday.new do |con|
       con.use FaradayTracer
       con.use Faraday::Adapter::NetHttp

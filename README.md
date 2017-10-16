@@ -47,7 +47,7 @@ in the applicable controller, and then:
 
 ```ruby
 with_span 'name of span' do
-  faraday_get(URL)
+  get(URL)
 end
 ```
 
