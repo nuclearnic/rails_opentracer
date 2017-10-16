@@ -1,5 +1,5 @@
-require 'rails_opentracing/activerecord/rails_opentracer.rb'
-require 'rails_opentracing/span_helpers'
+require 'rails_opentracer/activerecord/rails_opentracer.rb'
+require 'rails_opentracer/span_helpers'
 require 'rails_opentracer/version'
 require 'faraday'
 
