@@ -1,8 +1,7 @@
 # RailsOpentracer
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rails_opentracer`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem instruments an application to be used with tracing client. At this stage it is configured to be used with Zipkin only, but
+this can be changed at a later stage.
 
 ## Installation
 
@@ -20,9 +19,37 @@ Or install it yourself as:
 
     $ gem install rails_opentracer
 
+Generate files required by gem:
+
+    $ rails g rails_opentracer:install
+
+Add the following to development.rb:
+
+```ruby
+config.middleware.use Tracer
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+To run Zipkin locally, do:
+
+  $ docker run -d -p 9411:9411 openzipkin/zipkin
+
+Whenever a request is made to another application, do:
+
+```ruby
+include RailsOpentracer
+```
+
+in the applicable controller, and then:
+
+```ruby
+with_span 'name of span' do
+  faraday_get(URL)
+end
+```
+
+
 
 ## Development
 
