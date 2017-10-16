@@ -1,7 +1,20 @@
+require 'rails_opentracing/activerecord/rails_opentracer.rb'
+require 'rails_opentracing/span_helpers'
 require 'rails_opentracer/version'
 require 'faraday'
 
 module RailsOpentracer
+
+  class << self
+    def instrument(tracer: OpenTracing.global_tracer, active_span: nil, active_record: true)
+      ActiveRecord::RailsOpentracer.instrument(tracer: tracer, active_span: active_span) if active_record
+    end
+
+    def disable
+      ActiveRecord::RailsOpenTracer.disable
+    end
+  end
+
   def get(url)
     connection = Faraday.new do |con|
       con.use FaradayTracer

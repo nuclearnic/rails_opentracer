@@ -9,7 +9,7 @@ TODO:
 - Testz
 - Is faraday_tracer.rb required ?
 - Instrument active record tracing (and give creditz to ruby-rails-tracer's dude)
-- Are all those generators "the way" we want to do thingz?
+- Are all those generators "the way" we want to do things?
 
 ## Installation
 
