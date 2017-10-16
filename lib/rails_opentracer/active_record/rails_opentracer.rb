@@ -6,7 +6,7 @@ module ActiveRecord
       def instrument(tracer: OpenTracing.global_tracer, active_span: nil)
         clear_subscribers
         @subscriber = ::ActiveSupport::Notifications.subscribe('sql.active_record') do |*args|
-          ActiveRecord::Tracer.sql(tracer: tracer, active_span: active_span, args: args)
+          ActiveRecord::Opentracer.sql(tracer: tracer, active_span: active_span, args: args)
         end
 
         self
