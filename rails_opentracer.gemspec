@@ -6,8 +6,8 @@ require "rails_opentracer/version"
 Gem::Specification.new do |spec|
   spec.name          = "rails_opentracer"
   spec.version       = RailsOpentracer::VERSION
-  spec.authors       = ["Erik Botes"]
-  spec.email         = ["erik.botes@jumo.world"]
+  spec.authors       = ["Nicholas Erasmus"]
+  spec.email         = ["nuclearnicdev@gmail.com"]
 
   spec.summary       = %q{Gem that auto-instruments application with OpenTracing}
   # spec.description   = %q{TODO: Write a longer description or delete this line.}
