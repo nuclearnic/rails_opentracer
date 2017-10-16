@@ -1,6 +1,6 @@
 # RailsOpentracer
 
-This gem instruments an application to be used with tracing client. At this stage it is configured to be used with Zipkin only, but
+This gem instruments an application to be used with a tracing client. At this stage it is configured to be used with Zipkin only, but
 this can be changed at a later stage.
 
 ## Installation
