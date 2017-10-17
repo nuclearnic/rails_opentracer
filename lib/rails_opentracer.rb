@@ -4,7 +4,6 @@ require 'rails_opentracer/version'
 require 'faraday'
 
 module RailsOpentracer
-
   class << self
     def instrument(tracer: OpenTracing.global_tracer, active_span: nil, active_record: true)
       ActiveRecord::RailsOpentracer.instrument(tracer: tracer, active_span: active_span) if active_record
@@ -20,11 +19,10 @@ module RailsOpentracer
       con.use FaradayTracer
       con.use Faraday::Adapter::NetHttp
     end
-
     carrier = {}
     OpenTracing.inject(@span.context, OpenTracing::FORMAT_RACK, carrier)
     connection.headers = denilize(carrier)
-    response = connection.get(url)
+    connection.get(url)
   end
 
   def with_span(name)
@@ -37,6 +35,8 @@ module RailsOpentracer
     yield if block_given?
     @span.finish
   end
+
+  private
 
   def denilize(hash)
     hash.each {|k,v| hash[k] = "" if hash[k].nil?}
