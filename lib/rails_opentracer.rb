@@ -22,7 +22,7 @@ module RailsOpentracer
     carrier = {}
     OpenTracing.inject(@span.context, OpenTracing::FORMAT_RACK, carrier)
     connection.headers = denilize(carrier)
-    connection.get(url)
+    response = connection.get(url)
   end
 
   def with_span(name)
