@@ -34,7 +34,7 @@ module ActiveRecord
                           connection_id: payload.fetch(:connection_id))
 
         if payload[:exception]
-          RailsOpentracer::SpanHelpers.set_error(span, payload[:exception_object] || payload[:exception])
+          ::RailsOpentracer::SpanHelpers.set_error(span, payload[:exception_object] || payload[:exception])
         end
 
         span.finish(end_time: finish)
