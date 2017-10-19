@@ -7,8 +7,8 @@ this can be changed at a later stage.
 
 TODO:
 - Testz
-- Instrument active record tracing (and give creditz to ruby-rails-tracer's dude)
 - Are all those generators "the way" we want to do things?
+- Adding middleware is still done in development.rb for now
 
 ## Installation
 

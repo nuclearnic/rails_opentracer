@@ -10,7 +10,7 @@ module RailsOpentracer
     end
 
     def disable
-      ActiveRecord::RailsOpenTracer.disable
+      ActiveRecord::RailsOpentracer.disable
     end
   end
 
