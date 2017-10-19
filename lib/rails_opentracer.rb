@@ -16,7 +16,6 @@ module RailsOpentracer
 
   def get(url)
     connection = Faraday.new do |con|
-      # con.use FaradayTracer
       con.use Faraday::Adapter::NetHttp
     end
     carrier = {}
