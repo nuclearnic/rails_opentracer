@@ -34,6 +34,13 @@ module RailsOpentracer
     yield if block_given?
     @span.finish
   end
+  # BELOW WE ARE ATTEMPTING TO NOT USE GENERATORS SO THIS
+  # SHOULD EVENTUALLY GO INTO A SEPERATE FILE IF IT WORKS
+  class Railtie < Rails::Railtie
+    initializer "rails_opentracer.configure_rails_initialization" do
+      Rails.application.middleware.use RailsOpentracer::Middleware
+    end
+  end
 
   private
 

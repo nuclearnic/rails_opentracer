@@ -11,10 +11,10 @@ module RailsOpentracer
         puts "Initializer rails_opentracer added successfully"
       end
 
-      def copy_tracer_middleware
-        template "tracer.rb", "app/middleware/tracer.rb"
-        puts "Tracer middleware added successfully"
-      end
+      # def copy_tracer_middleware
+      #   template "tracer.rb", "app/middleware/tracer.rb"
+      #   puts "Tracer middleware added successfully"
+      # end
     end
   end
 end
