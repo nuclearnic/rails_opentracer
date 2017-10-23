@@ -1,7 +1,7 @@
 require 'zipkin'
 
-module RailsOpenTracer
-  class Tracer
+module RailsOpentracer
+  class Middleware
     def initialize(app)
       @app = app
     end
