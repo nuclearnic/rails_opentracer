@@ -6,9 +6,9 @@ This gem instruments an application to be used with a tracing client. At this st
 this can be changed at a later stage.
 
 TODO:
-- Testz
-- Are all those generators "the way" we want to do things?
-- Adding middleware is still done in development.rb for now
+- Tests
+- Investigate performance impact
+- Investigate cause of lone .js spans
 
 ## Installation
 
