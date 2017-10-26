@@ -46,8 +46,7 @@ module RailsOpentracer
     initializer 'rails_opentracer.configure_initializer' do
       # temporary monkey patch for a HTTPS related issue,
       # remove this once fix has been made to
-      module Zipkin 
-        class JsonClient
+        class ::Zipkin::JsonClient
           def emit_batch(spans)
             return if spans.empty?
         
