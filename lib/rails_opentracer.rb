@@ -3,6 +3,8 @@ require 'rails_opentracer/span_helpers'
 require 'rails_opentracer/version'
 require 'rails_opentracer/middleware'
 require 'faraday'
+require 'opentracing'
+require 'zipkin'
 
 module RailsOpentracer
   class << self
