@@ -52,7 +52,7 @@ module RailsOpentracer
       
           http = Net::HTTP.new(@spans_uri.host, @spans_uri.port)
           http.use_ssl = true if @spans_uri.scheme == 'https'
-          # puts "@spans_uri: #{@spans_uri} request_uri #{@spans_uri.request_uri}"
+          puts "@spans_uri: #{@spans_uri} request_uri #{@spans_uri.request_uri}"
           request = Net::HTTP::Post.new(@spans_uri.request_uri, {
             'Content-Type' => 'application/json'
           })
