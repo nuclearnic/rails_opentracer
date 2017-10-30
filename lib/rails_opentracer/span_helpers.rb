@@ -1,27 +1,6 @@
 module RailsOpentracer
   module SpanHelpers
     class << self
-      def get(url)
-        connection = Faraday.new do |con|
-          con.use Faraday::Adapter::NetHttp
-        end
-        carrier = {}
-        OpenTracing.inject(@span.context, OpenTracing::FORMAT_RACK, carrier)
-        connection.headers = denilize(carrier)
-        connection.get(url)
-      end
-    
-      def with_span(name)
-        @span =
-          if $active_span.present?
-            OpenTracing.start_span(name, child_of: $active_span)
-          else
-            OpenTracing.start_span(name)
-          end
-        yield if block_given?
-        @span.finish
-      end
-
       def set_error(span, exception)
         span.set_tag('error', true)
 
@@ -33,6 +12,26 @@ module RailsOpentracer
           span.log(event: 'error', :'error.object' => exception)
         end
       end
+    end
+    def get(url)
+      connection = Faraday.new do |con|
+        con.use Faraday::Adapter::NetHttp
+      end
+      carrier = {}
+      OpenTracing.inject(@span.context, OpenTracing::FORMAT_RACK, carrier)
+      connection.headers = denilize(carrier)
+      connection.get(url)
+    end
+  
+    def with_span(name)
+      @span =
+        if $active_span.present?
+          OpenTracing.start_span(name, child_of: $active_span)
+        else
+          OpenTracing.start_span(name)
+        end
+      yield if block_given?
+      @span.finish
     end
   end
 end
