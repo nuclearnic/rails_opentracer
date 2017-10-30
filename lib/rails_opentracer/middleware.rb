@@ -35,7 +35,7 @@ module RailsOpentracer
       end
     end
   end
-
+  
   class Middleware
     def initialize(app)
       @app = app
