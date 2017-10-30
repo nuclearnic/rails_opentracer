@@ -2,9 +2,9 @@ require 'rails_opentracer/active_record/rails_opentracer.rb'
 require 'rails_opentracer/span_helpers'
 require 'rails_opentracer/middleware'
 require 'rails_opentracer/version'
-# require 'opentracing'
-# require 'faraday'
-# require 'zipkin'
+require 'opentracing'
+require 'faraday'
+require 'zipkin'
 
 module RailsOpentracer
   class << self
