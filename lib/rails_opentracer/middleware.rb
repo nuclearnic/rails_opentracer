@@ -12,7 +12,7 @@ module RailsOpentracer
       class ::Zipkin::JsonClient
         def emit_batch(spans)
           return if spans.empty?
-      
+
           http = Net::HTTP.new(@spans_uri.host, @spans_uri.port)
           http.use_ssl = true if @spans_uri.scheme == 'https'
           puts "@spans_uri: #{@spans_uri} request_uri #{@spans_uri.request_uri}"
@@ -21,7 +21,7 @@ module RailsOpentracer
           })
           request.body = JSON.dump(spans)
           response = http.request(request)
-      
+
           if response.code != 202
             STDERR.puts(response.body)
           end
@@ -35,7 +35,7 @@ module RailsOpentracer
       end
     end
   end
-  
+
   class Middleware
     def initialize(app)
       @app = app
@@ -43,31 +43,35 @@ module RailsOpentracer
 
     def call(env)
       span = nil
-      begin
-        extracted_ctx = OpenTracing.extract(OpenTracing::FORMAT_RACK, env)
-        span_name = env['REQUEST_PATH']
-        span =
-          if extracted_ctx.nil?
-            OpenTracing.start_span(span_name)
-          else
-            OpenTracing.start_span(span_name, child_of: extracted_ctx)
-          end
-        $active_span = span # yuck
-      rescue StandardError => e
-        Rails.logger.error "TRACER_ERROR: #{error_message(e)}"
+      if ENV.key?('ZIPKIN_SERVICE_URL')
+        begin
+          extracted_ctx = OpenTracing.extract(OpenTracing::FORMAT_RACK, env)
+          span_name = env['REQUEST_PATH']
+          span =
+            if extracted_ctx.nil?
+              OpenTracing.start_span(span_name)
+            else
+              OpenTracing.start_span(span_name, child_of: extracted_ctx)
+            end
+          $active_span = span # yuck
+        rescue StandardError => e
+          Rails.logger.error "TRACER_ERROR: #{error_message(e)}"
+          return @app.call(env)
+        end
+
+        status, headers, response = @app.call(env)
+
+        begin
+          carrier = {}
+          OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, carrier)
+          span.finish
+          [status, headers , response]
+        rescue StandardError => e
+          Rails.logger.error "TRACER_ERROR: #{error_message(e)}"
+          [status, headers, response]
+        end
+      else
         return @app.call(env)
-      end
-
-      status, headers, response = @app.call(env)
-
-      begin
-        carrier = {}
-        OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, carrier)
-        span.finish
-        [status, headers , response]
-      rescue StandardError => e
-        Rails.logger.error "TRACER_ERROR: #{error_message(e)}"
-        [status, headers, response]
       end
     end
 
