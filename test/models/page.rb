@@ -1,10 +1,4 @@
 require "test_helper"
-# require "minitest/autorun"
-# require "minitest/spec"
-
-# require "combustion"
-# Combustion.path = "test/internal"
-# # Combustion.initialize! :all
 
 # class PageTest < Minitest::Test
 
@@ -21,7 +15,7 @@ require "test_helper"
 def test_something
 
   describe Page do
-    binding.pry
+    # binding.pry
 
   end 
 
