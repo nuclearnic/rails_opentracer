@@ -42,7 +42,6 @@ module RailsOpentracer
     end
 
     def call(env)
-      binding.pry
       span = nil
       if ENV.key?('ZIPKIN_SERVICE_URL') && ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
         begin

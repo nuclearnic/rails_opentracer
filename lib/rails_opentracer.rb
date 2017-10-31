@@ -1,4 +1,5 @@
 require 'rails_opentracer/active_record/rails_opentracer.rb'
+require 'rails_opentracer/zipkin_config'
 require 'rails_opentracer/span_helpers'
 require 'rails_opentracer/middleware'
 require 'rails_opentracer/version'
