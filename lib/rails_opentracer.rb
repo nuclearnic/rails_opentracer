@@ -8,15 +8,16 @@ require 'faraday'
 require 'zipkin'
 
 module RailsOpentracer
-  class << self
-    def instrument(tracer: OpenTracing.global_tracer, active_span: nil, active_record: true)
-      ActiveRecord::RailsOpentracer.instrument(tracer: tracer, active_span: active_span) if active_record
-    end
+  # TODO: figure out asap if this friggin thing is necessary at aaaaaallll XD
+  # class << self
+  #   def instrument(tracer: OpenTracing.global_tracer, active_span: nil, active_record: true)
+  #     ActiveRecord::RailsOpentracer.instrument(tracer: tracer, active_span: active_span) if active_record
+  #   end
 
-    def disable
-      ActiveRecord::RailsOpentracer.disable
-    end
-  end
+  #   def disable
+  #     ActiveRecord::RailsOpentracer.disable
+  #   end
+  # end
 
   def get(url)
     connection = Faraday.new do |con|
