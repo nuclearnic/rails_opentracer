@@ -1,4 +1,5 @@
 require "test_helper"
+require "minitest/autorun"
 require "minitest/spec"
 
 class RailsOpentracerTest < Minitest::Test
@@ -6,15 +7,13 @@ class RailsOpentracerTest < Minitest::Test
     refute_nil ::RailsOpentracer::VERSION
   end
 
-  def rspec_like_test
-    describe "bleh" do
-      it "does something" do
-        x = 1
-        y = 2
-        expect(x).to eq(y)
-      end
-    end
-  end
+  # def test_rspec_stuff
+  #   describe "bleh" do
+  #       x = 1
+  #       y = 2
+  #      assert_equal(x, y) 
+  #   end
+  # end
 
 end
 
