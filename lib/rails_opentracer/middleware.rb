@@ -23,10 +23,10 @@ module RailsOpentracer
           response = http.request(request)
 
           if response.code != 202
-            STDERR.puts(response.body)
+            Rails.logger.error("Error initialising Zipkin, expected response code, but received #{response.code}. Body: #{response.body}")
           end
         rescue => e
-          STDERR.puts("Error emitting spans batch: #{e.message}\n#{e.backtrace.join("\n")}")
+          Rails.logger.error("Error emitting spans batch: #{e.message}\n#{e.backtrace.join("\n")}")
         end
       end
       if ENV.key?('ZIPKIN_SERVICE_URL')
@@ -43,7 +43,7 @@ module RailsOpentracer
 
     def call(env)
       span = nil
-      if ENV.key?('ZIPKIN_SERVICE_URL')
+      if ENV.key?('ZIPKIN_SERVICE_URL') && ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
         begin
           extracted_ctx = OpenTracing.extract(OpenTracing::FORMAT_RACK, env)
           span_name = env['REQUEST_PATH']
@@ -71,6 +71,9 @@ module RailsOpentracer
           [status, headers, response]
         end
       else
+        if ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
+          Rails.logger.error 'TRACER_ERROR: `ZIPKIN_SERVICE_URL` environment variable is not defined'
+        end
         return @app.call(env)
       end
     end
