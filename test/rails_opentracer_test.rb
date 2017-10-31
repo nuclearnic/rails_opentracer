@@ -1,6 +1,7 @@
 require "test_helper"
 require "minitest/autorun"
 require "minitest/spec"
+require "active_record"
 
 class RailsOpentracerTest < Minitest::Test
   def test_that_it_has_a_version_number
@@ -15,5 +16,8 @@ class RailsOpentracerTest < Minitest::Test
   #   end
   # end
 
+  def test_do_query
+    binding.pry
+  end
 end
 
