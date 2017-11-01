@@ -3,7 +3,6 @@ require 'rails_opentracer/zipkin_config'
 
 module RailsOpentracer
   class Railtie < Rails::Railtie
-
     initializer 'rails_opentracer.configure_rack_middleware' do
       Rails.application.middleware.use Middleware
     end

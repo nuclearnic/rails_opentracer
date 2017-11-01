@@ -8,7 +8,6 @@ require 'faraday'
 require 'zipkin'
 
 module RailsOpentracer
-  
   def get(url)
     connection = Faraday.new do |con|
       con.use Faraday::Adapter::NetHttp
