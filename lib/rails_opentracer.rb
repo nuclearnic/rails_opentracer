@@ -35,7 +35,6 @@ module RailsOpentracer
     else
       yield if block_given?
     end
-    binding.pry
   end
 
   private

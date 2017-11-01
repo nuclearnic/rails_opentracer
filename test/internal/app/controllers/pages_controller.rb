@@ -1,11 +1,12 @@
-class PagesController < ApplicationController
+class PagesController < ActionController::Base
   include RailsOpentracer
 
   def index
     with_span 'Calling books controller from app1' do
-      get('http://localhost:3001/books')
+      get('http://example.org')
     end
-    @users = User.all
+    @pages = Page.all
+    @span
   end
 
 end

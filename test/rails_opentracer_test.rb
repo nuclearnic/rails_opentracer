@@ -15,18 +15,6 @@ class RailsOpentracerTest < Minitest::Test
     refute_nil ::RailsOpentracer::VERSION
   end
 
-
-  # # TODO: 4x tests for all ENVs combos
-  # def test_active_record_query
-  #   page = Page.first
-  #   # binding.pry
-  # end
-
-  # def test_loading_of_opentracer_middleware
-  #   # binding.pry
-  #   Rails.application.middleware.include? RailsOpentracer::Middleware 
-  # end
-
   # def test_rspec_stuff
   #   describe "bleh" do
   #       x = 1
@@ -35,10 +23,4 @@ class RailsOpentracerTest < Minitest::Test
   #   end
   # end
 
-  # def test_do_query
-  #   binding.pry
-  # end
 end
-
-# class ZipkinConfigNotPresentError < StandardError
-# end
