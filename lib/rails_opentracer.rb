@@ -7,6 +7,9 @@ require 'opentracing'
 require 'faraday'
 require 'zipkin'
 
+# TODO: use ZipkinConfig instead of these ENVs
+# post requests ?
+
 module RailsOpentracer
   def get(url)
     connection = Faraday.new do |con|
