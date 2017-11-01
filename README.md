@@ -1,12 +1,10 @@
 # RailsOpentracer
 
-Gem is in active development. If you see this then us devs aren't quite done yet.
-
 This gem instruments an application to be used with a tracing client. At this stage it is configured to be used with Zipkin only, but
-this can be changed at a later stage.
+this can be changed at a later stage. While there are other gems that offer very similar functionality, the idea here was to instrument
+an application with OpenTracing with the absolute minimum amount of instrumentation/configuration.
 
 TODO:
-- Tests
 - Investigate performance impact
 - Investigate cause of lone .js spans
 
@@ -22,20 +20,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install rails_opentracer
-
-Generate files required by gem:
-
-    $ rails g rails_opentracer:install
-
-Add the following to development.rb:
-
-```ruby
-config.middleware.use Tracer
-```
-
 ## Usage
 
 To run Zipkin locally, do:
@@ -44,7 +28,9 @@ To run Zipkin locally, do:
 
 You will need to set an environment variable with the Zipkin client URL. Locally this would be:
 
-`ENV['ZIPKIN_SERVICE_URL']='http://localhost:9411'`.
+`ENV['ZIPKIN_SERVICE_URL']='http://localhost:9411'`, and
+
+`ENV['RAILS_OPENTRACER_ENABLED']='yes'`.
 
 Whenever a request is made to another application, do:
 
