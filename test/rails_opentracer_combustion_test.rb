@@ -3,8 +3,6 @@ require "combustion"
 Combustion.path = "test/internal"
 Combustion.initialize! :all
 
-# TODO: WHEN ENV is test then don't ping zipkin client url
-
 class RailsOpentracerCombustionTest < Minitest::Test
   def test_opentracer_middleware_is_loaded
     assert Rails.application.middleware.include? RailsOpentracer::Middleware 
