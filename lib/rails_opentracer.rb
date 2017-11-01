@@ -8,22 +8,23 @@ require 'faraday'
 require 'zipkin'
 
 module RailsOpentracer
+  
   def get(url)
     connection = Faraday.new do |con|
       con.use Faraday::Adapter::NetHttp
     end
-    if ENV.key?('ZIPKIN_SERVICE_URL') && ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
+    if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
       carrier = {}
       OpenTracing.inject(@span.context, OpenTracing::FORMAT_RACK, carrier)
       connection.headers = denilize(carrier)
-    elsif ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
+    elsif ZipkinConfig.opentracer_enabled?
       Rails.logger.error 'TRACER_ERROR: `ZIPKIN_SERVICE_URL` environment variable is not defined'
     end
     connection.get(url)
   end
 
   def with_span(name)
-    if ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
+    if ZipkinConfig.opentracer_enabled_and_zipkin_url_present? 
       @span =
         if $active_span.present?
           OpenTracing.start_span(name, child_of: $active_span)

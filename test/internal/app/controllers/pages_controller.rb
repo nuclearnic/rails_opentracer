@@ -8,5 +8,4 @@ class PagesController < ActionController::Base
     @pages = Page.all
     @span
   end
-
 end

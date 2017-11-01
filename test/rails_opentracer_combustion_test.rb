@@ -6,6 +6,7 @@ Combustion.initialize! :all
 # TODO: WHEN ENV is test then don't ping zipkin client url
 
 class RailsOpentracerCombustionTest < Minitest::Test
+
   def test_opentracer_middleware_is_loaded
     assert Rails.application.middleware.include? RailsOpentracer::Middleware 
   end
@@ -24,5 +25,4 @@ class RailsOpentracerCombustionTest < Minitest::Test
     args = ["","","","", {:sql=>"", :name=>"", :connection_id=>12345} ]
     refute_nil ActiveRecord::RailsOpentracer.sql(args: args)
   end
-
 end

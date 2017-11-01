@@ -1,8 +1,9 @@
 require 'zipkin'
+require 'rails_opentracer/zipkin_config'
 
 module RailsOpentracer
-
   class Railtie < Rails::Railtie
+
     initializer 'rails_opentracer.configure_rack_middleware' do
       Rails.application.middleware.use Middleware
     end
@@ -29,8 +30,8 @@ module RailsOpentracer
           Rails.logger.error("Error emitting spans batch: #{e.message}\n#{e.backtrace.join("\n")}")
         end
       end
-      if ENV.key?('ZIPKIN_SERVICE_URL')
-        OpenTracing.global_tracer = Zipkin::Tracer.build(url: ENV['ZIPKIN_SERVICE_URL'], service_name: Rails.application.class.parent_name)
+      if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
+        OpenTracing.global_tracer = Zipkin::Tracer.build(url: ZipkinConfig.zipkin_url, service_name: Rails.application.class.parent_name)
         ActiveRecord::RailsOpentracer.instrument(tracer: OpenTracing.global_tracer, active_span: -> { $active_span })
       end
     end
@@ -43,7 +44,7 @@ module RailsOpentracer
 
     def call(env)
       span = nil
-      if ENV.key?('ZIPKIN_SERVICE_URL') && ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
+      if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
         begin
           extracted_ctx = OpenTracing.extract(OpenTracing::FORMAT_RACK, env)
           span_name = env['REQUEST_PATH']
@@ -71,7 +72,7 @@ module RailsOpentracer
           [status, headers, response]
         end
       else
-        if ENV.key?('RAILS_OPENTRACER_ENABLED') && ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
+        if ZipkinConfig.opentracer_enabled? 
           Rails.logger.error 'TRACER_ERROR: `ZIPKIN_SERVICE_URL` environment variable is not defined'
         end
         return @app.call(env)
