@@ -1,6 +1,6 @@
 require 'test_helper'
 # require 'minitest/autorun'
-# require 'minitest/spec'
+require 'minitest/spec'
 # require 'active_record'
 
 # TODO: when including RailsOpentracer (below) connection to Zipkin client fails (obviously)
@@ -14,6 +14,7 @@ class RailsOpentracerTest < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::RailsOpentracer::VERSION
   end
+
 
   # # TODO: 4x tests for all ENVs combos
   # def test_active_record_query
