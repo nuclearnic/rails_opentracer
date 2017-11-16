@@ -15,6 +15,7 @@ module RailsOpentracer
     if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
       carrier = {}
       OpenTracing.inject(@span.context, OpenTracing::FORMAT_RACK, carrier)
+      carrier[:Authorization] = "BASIC" + Base64::encode64(ENV['ZIPKIN_SERVICE_AUTH'])
       connection.headers = denilize(carrier)
     elsif ZipkinConfig.opentracer_enabled?
       Rails.logger.error 'TRACER_ERROR: `ZIPKIN_SERVICE_URL` environment variable is not defined'
