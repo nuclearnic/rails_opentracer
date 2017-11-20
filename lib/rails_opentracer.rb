@@ -23,7 +23,11 @@ module RailsOpentracer
   end
 
   def redirect(url)
-    binding.pry
+    uri = URI(url)
+    uri.query = {
+      opentracer_trace_id: $active_span.context.trace_id,
+      opentracer_parent_id: $active_span.context.span_id
+    }
     redirect_to url
   end
 

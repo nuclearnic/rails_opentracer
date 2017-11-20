@@ -20,7 +20,6 @@ module RailsOpentracer
     end
 
     def call(env)
-      binding.pry
       span = nil
       if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
         begin
@@ -29,10 +28,16 @@ module RailsOpentracer
           span =
             if extracted_ctx.nil?
               OpenTracing.start_span(span_name)
+              redirected_ctx = Rack::Utils.parse_nested_query(env["QUERY_STRING"]) 
             else
               OpenTracing.start_span(span_name, child_of: extracted_ctx)
             end
+          if redirected_ctx.present?
+            span.context.instance_variable_set(:@trace_id, redirect_ctx['opentracer_trace_id'])
+            span.context.instance_variable_set(:@parent_id, redirect_ctx['opentracer_parent_id'])
+          end
           $active_span = span # yuck
+
         rescue StandardError => e
           Rails.logger.error "TRACER_ERROR: #{error_message(e)}"
           return @app.call(env)
