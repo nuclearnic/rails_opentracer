@@ -27,8 +27,8 @@ module RailsOpentracer
           span_name = env['REQUEST_PATH']
           span =
             if extracted_ctx.nil?
-              OpenTracing.start_span(span_name)
               redirected_ctx = Rack::Utils.parse_nested_query(env["QUERY_STRING"]) 
+              OpenTracing.start_span(span_name)
             else
               OpenTracing.start_span(span_name, child_of: extracted_ctx)
             end
