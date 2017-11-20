@@ -27,8 +27,8 @@ module RailsOpentracer
     uri.query = {
       opentracer_trace_id: $active_span.context.trace_id,
       opentracer_parent_id: $active_span.context.span_id
-    }
-    redirect_to url
+    }.to_query
+    redirect_to uri.to_s
   end
 
   def with_span(name)
