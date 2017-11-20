@@ -21,21 +21,18 @@ module RailsOpentracer
 
     def call(env)
       span = nil
-      binding.pry
       if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
         begin
           extracted_ctx = OpenTracing.extract(OpenTracing::FORMAT_RACK, env)
           span_name = env['REQUEST_PATH']
           span =
             if extracted_ctx.nil?
-              binding.pry
               redirected_ctx = Rack::Utils.parse_nested_query(env["QUERY_STRING"]) 
               OpenTracing.start_span(span_name)
             else
               OpenTracing.start_span(span_name, child_of: extracted_ctx)
             end
           if redirected_ctx.present?
-            binding.pry
             span.context.instance_variable_set(:@trace_id, redirected_ctx['opentracer_trace_id'])
             span.context.instance_variable_set(:@parent_id, redirected_ctx['opentracer_parent_id'])
           end
