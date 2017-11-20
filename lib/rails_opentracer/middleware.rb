@@ -20,6 +20,7 @@ module RailsOpentracer
     end
 
     def call(env)
+      binding.pry
       span = nil
       if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
         begin

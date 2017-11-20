@@ -22,6 +22,11 @@ module RailsOpentracer
     connection.get(url)
   end
 
+  def redirect(url)
+    binding.pry
+    redirect_to url
+  end
+
   def with_span(name)
     if ZipkinConfig.opentracer_enabled_and_zipkin_url_present? 
       @span =
