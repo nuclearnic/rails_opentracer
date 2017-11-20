@@ -36,8 +36,8 @@ module RailsOpentracer
             end
           if redirected_ctx.present?
             binding.pry
-            span.context.instance_variable_set(:@trace_id, redirect_ctx['opentracer_trace_id'])
-            span.context.instance_variable_set(:@parent_id, redirect_ctx['opentracer_parent_id'])
+            span.context.instance_variable_set(:@trace_id, redirected_ctx['opentracer_trace_id'])
+            span.context.instance_variable_set(:@parent_id, redirected_ctx['opentracer_parent_id'])
           end
           $active_span = span # yuck
 
