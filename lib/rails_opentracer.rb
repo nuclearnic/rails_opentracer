@@ -9,9 +9,10 @@ require 'zipkin'
 
 module RailsOpentracer
   def get(url)
-    connection = Faraday.new do |con|
-      con.use Faraday::Adapter::NetHttp
-    end
+    connection =
+      Faraday.new do |con|
+        con.use Faraday::Adapter::NetHttp
+      end
     if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
       carrier = {}
       OpenTracing.inject(@span.context, OpenTracing::FORMAT_RACK, carrier)
@@ -23,7 +24,7 @@ module RailsOpentracer
   end
 
   def with_span(name)
-    if ZipkinConfig.opentracer_enabled_and_zipkin_url_present? 
+    if ZipkinConfig.opentracer_enabled_and_zipkin_url_present?
       @span =
         if $active_span.present?
           OpenTracing.start_span(name, child_of: $active_span)
@@ -32,13 +33,14 @@ module RailsOpentracer
         end
       yield if block_given?
       @span.finish
-    else
-      yield if block_given?
+    elsif block_given?
+      yield
     end
   end
 
   private
+
   def denilize(hash)
-    hash.each { |k, _v| hash[k] = '' if hash[k].nil? }
+    hash.each_key { |k, _v| hash[k] = '' if hash[k].nil? }
   end
 end

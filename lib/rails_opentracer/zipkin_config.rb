@@ -1,7 +1,7 @@
 module RailsOpentracer
   class ZipkinConfig
     def self.opentracer_enabled?
-     ENV['RAILS_OPENTRACER_ENABLED'] == 'yes' 
+      ENV['RAILS_OPENTRACER_ENABLED'] == 'yes'
     end
 
     def self.opentracer_enabled_and_zipkin_url_present?
@@ -14,6 +14,6 @@ module RailsOpentracer
       else
         ENV['ZIPKIN_SERVICE_URL']
       end
-    end 
+    end
   end
 end

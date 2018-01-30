@@ -1,0 +1,74 @@
+# Configuration used to check ruby source code with rubocop.
+
+AllCops:
+  TargetRubyVersion: 2.4.2
+  EnabledByDefault: true
+
+# Metrics
+
+Metrics/LineLength:
+  Enabled: no
+
+Metrics/MethodLength:
+  Enabled: no
+
+Metrics/AbcSize:
+  Enabled: yes
+  Exclude:
+    - lib/rails_opentracer/middleware.rb
+
+Metrics/PerceivedComplexity:
+  Enabled: yes
+  Exclude:
+    - lib/rails_opentracer/middleware.rb
+
+# Rails
+
+Rails/ApplicationRecord:
+  Enabled: no
+
+# Style
+
+Style/Copyright:
+  Enabled: no
+
+Style/Documentation:
+  Enabled: no
+
+Style/DocumentationMethod:
+  Enabled: no
+
+Style/FrozenStringLiteralComment:
+  Enabled: no
+
+Style/GlobalVars:
+  Enabled: yes
+  Exclude:
+    - lib/rails_opentracer.rb
+    - lib/rails_opentracer/middleware.rb
+
+Style/HashSyntax:
+  Enabled: yes
+  Exclude:
+    - lib/rails_opentracer/span_helpers.rb
+ 
+Style/MethodCallWithArgsParentheses:
+  Enabled: no
+
+Style/MissingElse:
+  Enabled: no
+
+Style/StringHashKeys:
+  Enabled: no
+
+
+
+# Style/Copyright:
+  # Enabled: no
+# Style/PercentLiteralDelimiters:
+#   Enabled: no
+
+# Style/RedundantBegin:
+#   Exclude:
+#     - app/helpers/metrics_helper.rb
+

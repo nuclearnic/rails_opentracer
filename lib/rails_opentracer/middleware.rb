@@ -31,7 +31,8 @@ module RailsOpentracer
             else
               OpenTracing.start_span(span_name, child_of: extracted_ctx)
             end
-          $active_span = span # yuck
+          # yuck
+          $active_span = span
         rescue StandardError => e
           Rails.logger.error "TRACER_ERROR: #{error_message(e)}"
           return @app.call(env)
@@ -43,13 +44,13 @@ module RailsOpentracer
           carrier = {}
           OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, carrier)
           span.finish
-          [status, headers , response]
+          [status, headers, response]
         rescue StandardError => e
           Rails.logger.error "TRACER_ERROR: #{error_message(e)}"
           [status, headers, response]
         end
       else
-        if ZipkinConfig.opentracer_enabled? 
+        if ZipkinConfig.opentracer_enabled?
           Rails.logger.error 'TRACER_ERROR: `ZIPKIN_SERVICE_URL` environment variable is not defined'
         end
         return @app.call(env)

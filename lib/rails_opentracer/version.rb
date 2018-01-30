@@ -1,3 +1,3 @@
 module RailsOpentracer
-  VERSION = "0.1.38"
+  VERSION = '0.1.39'.freeze
 end
