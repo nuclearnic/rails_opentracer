@@ -9,11 +9,7 @@ module RailsOpentracer
     end
 
     def self.zipkin_url
-      if Rails.env.test? || Rails.env.development?
-        'http://localhost:9411'
-      else
-        ENV['ZIPKIN_SERVICE_URL']
-      end
+      ENV['ZIPKIN_SERVICE_URL']
     end
   end
 end
